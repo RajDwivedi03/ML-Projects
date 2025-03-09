@@ -7,7 +7,7 @@ HYPEN_E_DOT="-e ."
 def get_requirement(file_path:str)->List[str]:
     '''This function will return the list of the requirements
     '''
-    requirements=[]
+    
     with open(file_path) as file_obj:
         requirement=file_obj.readlines()
         requirement=[req.replace("\n","") for req in requirement]
