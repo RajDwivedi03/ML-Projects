@@ -1,7 +1,7 @@
 import sys
-import logging
+from src.logger  import logging
 
-def error_message_detail(error, error_detail: sys):
+def error_message_detail(error, error_detail):
     _, _, exc_tb = error_detail.exc_info()  # Gets traceback object
     file_name = exc_tb.tb_frame.f_code.co_filename  # Get filename where error occurred
     error_message = "Error occurred in Python script: [{0}], Line Number: [{1}], Error Message: [{2}]".format(
@@ -18,7 +18,9 @@ class CustomException(Exception):
         return self.error_message  # Print the detailed error when exception is raised
 
 
-  
+    
+    
+        
 
 
    
