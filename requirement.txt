@@ -5,6 +5,7 @@ matplotlib
 catboost
 xgboost
 dill
+gunicorn
 flask
 scikit-learn
 #-e .
