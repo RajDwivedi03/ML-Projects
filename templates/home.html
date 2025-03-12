@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    
+    <style>
+        /* Smooth Background Animation */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #87CEFA, #B0E0E6, #AFEEEE, #87CEEB); /* Sky Blue */
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Form Container - Smaller & Rounded Edges */
+        .login {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px; /* Rounded edges */
+            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+            width: 500px;  /* Reduced width */
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .login:hover {
+            transform: scale(1.02);
+        }
+
+        /* Form Labels */
+        h1 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Form Fields */
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Change Color on Hover */
+        .form-control:hover {
+            border-color: #5DADE2;
+            background: #E3F2FD;
+            box-shadow: 0px 0px 6px rgba(93, 173, 226, 0.5);
+        }
+
+        /* Select Dropdown */
+        select {
+            appearance: none;
+            background: white;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        select:hover {
+            background: #D6EAF8;
+        }
+
+        /* Submit Button */
+        .btn-primary {
+            background: linear-gradient(135deg, #5DADE2, #3498DB);
+            color: white;
+            padding: 10px 18px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #3498DB, #5DADE2);
+            transform: scale(1.05);
+        }
+
+        /* Prediction Result */
+        h2 {
+            font-size: 18px;
+            color: #444;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+       <h1>Student Exam Performance Indicator</h1>
+   
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <h1>
+            <legend>Student Exam Performance Prediction</legend>
+        </h1>
+
+        <!-- Gender -->
+        <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <select class="form-control" name="gender" required>
+                <option selected disabled value="">Select your Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        
+        <!-- Ethnicity -->
+        <div class="mb-3">
+            <label class="form-label">Race or Ethnicity</label>
+            <select class="form-control" name="ethnicity" required>
+                <option selected disabled value="">Select Ethnicity</option>
+                <option value="group A">Group A</option>
+                <option value="group B">Group B</option>
+                <option value="group C">Group C</option>
+                <option value="group D">Group D</option>
+                <option value="group E">Group E</option>
+            </select>
+        </div>
+        
+        <!-- Parental Education -->
+        <div class="mb-3">
+            <label class="form-label">Parental Level of Education</label>
+            <select class="form-control" name="parental_level_of_education" required>
+                <option selected disabled value="">Select Parent Education</option>
+                <option value="associate's degree">Associate's Degree</option>
+                <option value="bachelor's degree">Bachelor's Degree</option>
+                <option value="high school">High School</option>
+                <option value="master's degree">Master's Degree</option>
+                <option value="some college">Some College</option>
+                <option value="some high school">Some High School</option>
+            </select>
+        </div>
+
+        <!-- Lunch -->
+        <div class="mb-3">
+            <label class="form-label">Lunch</label>
+            <select class="form-control" name="lunch" required>
+                <option selected disabled value="">Select Lunch Type</option>
+                <option value="standard">Standard</option>
+                <option value="free/reduced">Free/Reduced</option>
+            </select>
+        </div>
+
+        <!-- Test Preparation Course -->
+        <div class="mb-3">
+            <label class="form-label">Test Preparation Course</label>
+            <select class="form-control" name="test_preparation_course" required>
+                <option selected disabled value="">Select Course</option>
+                <option value="none">None</option>
+                <option value="completed">Completed</option>
+            </select>
+        </div>
+
+        <!-- Writing Score -->
+        <div class="mb-3">
+            <label class="form-label">Writing Score (out of 100)</label>
+            <input class="form-control" type="number" name="writing_score" placeholder="Enter your Writing Score" min="0" max="100" required />
+        </div>
+        
+        <!-- Reading Score -->
+        <div class="mb-3">
+            <label class="form-label">Reading Score (out of 100)</label>
+            <input class="form-control" type="number" name="reading_score" placeholder="Enter your Reading Score" min="0" max="100" required />
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict your Maths Score" />
+        </div>
+    </form>
+    
+    <h2>YOUR MATHS SCORE {{results}}</h2>
+</div>
+
+</body>
+</html>
